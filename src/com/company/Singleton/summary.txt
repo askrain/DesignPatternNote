@@ -22,3 +22,13 @@
 private Object readResolve() throws ObjectStreamException {
         return singleton;
     }
+
+安卓源码中的单例模式：LayoutInflater
+安卓系统中，经常通过Context获取系统级别的服务，如WindowsManagerService、ActivityManagerService等。这些服务会在合适的时候以单例模式的形式注册在系统中
+。使用的是容器的方式。需要的时候通过Context.getSystemService(String name)获取相关的服务实例。
+
+另外著名的ImageLoader框架Universal-Image-Loader使用的是DCL形式的单例模式
+
+总结：
+1.由于客户端通常没有高并发的情况，所以选择哪种单例方式并没有太大影响。出于效率考虑，推荐DCL和静态内部类的实现模式
+2.单例模式如果持有Context，那么容易引发内存泄漏。所以使用的Context最好是ApplicationContext
