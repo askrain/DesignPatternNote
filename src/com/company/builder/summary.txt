@@ -1,0 +1,36 @@
+Builder模式：
+
+定义：是一步步构建复杂对象的创建型模式。允许用户在不知道内部构建细节的情况下，更精细的
+     控制对象的构造流程。
+     将一个复杂对象的构建和它的表示分离，使得同样的构建过程可以创建不同的表示
+
+目的：将构建复杂对象的过程和它的组件解耦，是的构建过程和部件表示 隔离开来
+
+应用场景：
+1.相同的方法，不同的执行顺序，产生不同的事件结果
+2.多个部件和零件，装配到一个对象中，产生的运行结果又不相同的时候
+3.产品类十分复杂，产品类中的调用顺序不同产生了不同的作用
+4.初始化一个对象特别复杂，参数多且有默认值
+
+组成：
+1.Product产品类  产品的抽象类
+2.Builder类     抽象的Builder类，规范产品的组件，一般由子类实现具体的组建
+3.ConcreteBuilder 具体的构建类
+4.Director  统一的组装过程
+
+在现实开发中，Director角色会经常省略。直接使用Builder来进行对象的组装，这个builder通常是链式调用，它的
+关键点是每个setter方法都返回builder本身，即return this. 大概的代码如下
+Builder builder =new TestBuilder().setA("A").setB("B");
+Product product =builder.create();
+
+
+在安卓中Builder的实现：AlertDialog  Universal-image-loader 中的ImageLoaderConfig 静态内部类builder
+
+常用句式：ImageLoader.getInstance().init(config);
+
+Builder在安卓中常作为配置类 的构建器 ，将配置的构建和表示分离开来。通过链式调用实现
+优点：
+1.良好的封装性，使用构建者模式可以使得客户端不必知道产品内部的组成细节
+2.独立，容易扩展
+
+缺点：会产生多余的Builder对象和Director，消耗内存
