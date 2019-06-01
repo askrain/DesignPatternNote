@@ -1,0 +1,23 @@
+工厂模式：
+
+工厂方法模式是创建型设计模式之一，是一种简单的模式，也是使用很广泛的一种设计模式。
+Android中的Activity的onCreate等方法都可以看成是工厂模式的例子。setContentView()
+中可以设置各种view返回给framework进行处理
+
+定义：
+
+定义一个用于创建对象的接口，让子类决定去实例化哪个类
+
+
+场景：
+
+在任何需要生成复杂对象的地方都可以使用工厂方法模式
+
+
+模型构成：
+1.product
+2.concreteProduct
+3.factory
+4.concreteFactory
+
+常用的一种方式：在concreteFactory 中使用反射+泛型的方式决定具体生产哪中产品
