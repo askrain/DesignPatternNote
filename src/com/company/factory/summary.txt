@@ -21,3 +21,7 @@ Android中的Activity的onCreate等方法都可以看成是工厂模式的例子
 4.concreteFactory
 
 常用的一种方式：在concreteFactory 中使用反射+泛型的方式决定具体生产哪中产品
+
+缺点：
+1.每次为工厂增加新的产品都要编写新的产品类
+2.引入抽象层，导致了结构的复杂化
