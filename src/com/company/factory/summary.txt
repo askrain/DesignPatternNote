@@ -5,7 +5,7 @@ Android中的Activity的onCreate等方法都可以看成是工厂模式的例子
 中可以设置各种view返回给framework进行处理
 又如：在数据结构中：ArrayList和HashMap中都运用了工厂模式
 以List和Set为例，List和Set都继承于Collection接口，Collection接口继承于Iterale接口。在两个具体类实现
-这个类的过程中就用了工厂方法。
+这个类的过程中就用了工厂方法。 还有Activity的setContentView（）和Service中的onBinder()都是工厂方法的运用
 
 定义：
 
