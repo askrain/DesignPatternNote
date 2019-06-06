@@ -18,3 +18,5 @@
 2.State 抽象状态类或者是状态接口 定义一个或者一组接口，表示该状态下的行为
 3.ConcreteStateA/ConcreteStateB 具体的状态类，每一个具体的状态类都实现State中定义高的接口，
 从而达到了不同状态下的行为
+
+Android中的实例便是：Wifi开关页面
