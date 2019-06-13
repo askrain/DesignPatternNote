@@ -26,3 +26,35 @@ Invoker 请求者对象 调用命令对象执行具体的操作
 Client 客户端角色
 
 一句话：命令模式就是将行为调用者与实现者解耦
+
+为什么很普通的一个类要写的如此复杂呢？
+方便后期维护和拓展，它遵照了对修改关闭，对扩展开放的原则。命令模式的另一个好处是：
+在请求者或者Button里面可以使用一个数据结构来存储执行过的命令对象，以此知道刚执行了那些对象，并可以在需要的时候
+恢复
+
+安卓中的典型应用：1.事件机制中底层逻辑对事件的转发处理  2.Android在对应用程序包管理的部分也有对命令模式应用的体现
+NotifyArgs ：命令者抽象  安卓每一种事件在屏幕上产生后都是经由底层逻辑将其转化为此对象
+NotifyKeyArgs: 具体命令者
+InputDispatcher :请求者
+
+
+除了上述的命令着和请求者外，接受者则有具体的硬件驱动承担。
+
+PackageManagerService 是安卓系统的Service之一。主要功能是实现应用包的解析，管理，卸载操作
+在pms中其对包的相关消息的处理由其内部类PackageHandler承担，将其需要处理的请求作为对象通过消息
+传递给相关的方法，而对于包的安装、移动以及包大小的测量则分别封装为HandlerParam 的三个具体的子类
+InstallParams MoveParams MeasureParams ,pms相当于是请求者
+
+
+整个安卓事件输入系统可以分为几个部分：
+InputReader  将输入事件从硬件节点中读取后转化为一个Event事件
+InputDispatcher 接受来自InputReader的Event事件 将事件分发给合适的窗口并监控ANR的发生
+InputManager  是创建InputReader 和 InputDispatcher的父类，提供Policy对事件进行预处理
+
+最后则是涉及到系统Service以及面向用户的几个相关模块 ActivityManager WindowManager 和View
+安卓中负责事件输入的是InputManagerService，是系统级的Service之一，协助上面描述的部分。他也是在
+SystemServer进行初始化的
+
+
+优点：普遍性，可以在任何地方应用命令模式
+缺点：类的膨胀（设计模式的通病）
