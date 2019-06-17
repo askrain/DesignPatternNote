@@ -1,0 +1,57 @@
+有关于MVC MVP MVVP
+
+MVC:
+
+Model:数据保存 将新的数据发送到view
+Controller：业务逻辑  要求model改变状态
+View：用户界面  传递指令到controller
+
+常用的通信方式是：view、controller和model单项循环，所有的通信都是单项的
+变种场景：view和controller双向通信  view 和 model双向通信
+
+MVP:
+1.各部分之间的通信都是双向的
+2.view 和 model不发生联系，都是通过presenter 传递   非常厚，多有业务都部署在此
+3.view 非常薄，不部署任何业务逻辑，被成为“被动视图” Passive View，即没有任何主动性
+
+MVVP：
+
+与mvp的不同是 view  和 viewModel之间是同步的双向绑定（data-binding）,view的变动自动反映在ViewModel
+
+
+MCV MVP 架构的性质比较强
+MVVP 类似于库、框架。一次写完，多次复用。本质就是监听器，实现view 和viewModel的双向绑定
+
+
+怎样解决匿名内部类中final的问题：
+1.包装成对象
+2.独享中设置接口回调
+
+MVVP：是加了双向绑定的MVP。以实现表现数据和内存数据的实时同步更新（表现数据、内存数据和数据库数据）。实现相互绑定，相互更新。
+
+
+MVC和MVP的本质区别：
+struts的框架解释
+“mvp就是mvc，mvc其实不是真正的mvc”。
+没什么区别，mvc抽象出了单独的View层，mvp抽出了presenter层
+两者都实现了view层和控制层的松耦合，实现了面向接口编程。通过在控制层把view层的接口（如showData()）抽象出来，View层
+实现这个接口
+
+MVC是以控制器作为连接view和model的桥梁以实现解耦
+MVC是一种框架而非设计模式，可以把mvc看成是观察者模式、组合模式和策略模式的组合
+框架和设计模式的区别：
+框架是大智慧，用来对软件设计进行分工。设计模式是小技巧，用来对具体问题提出解决方案，以提高代码复用率，降低耦合
+
+mvc短处：
+1.因为要实现model和view的严格分离，所以给调试带来了困难
+2.将一个应用分三个部分，意味着同一个工程会多出许多文件。对于小项目来讲，反而会带来更大的工作量及复杂性
+
+所以mvc更适合大型项目。比如Android的Ui系统框架，我们在常用的Activity中可以感受到MVC方面的架构，
+但这个框架并不是我们自己完成的，而是由framework给我们搭建好的。在平时的开发中我们并不常用到MVC模式去
+脱离AndroidUI系统构建自己的框架结构
+
+MVC和MVP的最主要区别是：MVP中的view不能直接访问Model，必须通过Presenter
+
+
+为了防止内存泄露的场景，常用软引用结合Activity、Fragment的生命周期来解决此问题
+相关的示例代码：https://github.com/hehonghui/the-tech-frontier-app
