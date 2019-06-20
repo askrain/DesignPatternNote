@@ -21,6 +21,45 @@
 
 
 模型：
-AbsTemplate 抽象类
+AbsTemplate 抽象类  里面没有抽象方法 ，算法的步骤写在final方法中，保证了逻辑流程不能被子类修改
 ConcreteImplA  具体实现类A
 ConcreteImplB  具体实现类B
+
+Android中相关的运用：
+
+Android中的AsyncTask中的三个常用方法：
+1.onPreExecute()
+2.doInBackground()
+3.onPostExecute()
+
+执行异步线程的时候用的就是线程池，即execute()执行的时候内部调用了 executeOnExecutor()方法，两个方法都是
+都是final方法。在executeOnExecutor()方法内部可以看见该方法在执行的时候首先会检查当前状态，不是pending状态就
+抛异常。所以AsyncTask只能被执行一次。
+
+
+
+Activity的启动流程也是一个模版方法：
+
+Android系统启动的时候，第一个启动起来的进程是zygote进程，然后由zygote进程启动SystemServer
+，再然后启动ActivityManagerService、WindowManagerService等核心服务，这些服务承载着整个Android系统与
+客户端交互的重担。zygote除了启动系统服务与进程之外，普通的用户进程也由zygote进程fork而来，而一个进程启动起来之后
+会加载用户在配置文件中配置的默认加载的Activity。即ActivityThread的main方法
+ActivityThread的main函数被调用后，依次执行Activity的onCreate() onStart() onResume(),
+用户通常在子类activity中覆写onCreate()方法调用setContentView（）来设置布局，系统将这个布局添加到内置
+的布局界面的content区域中。然后调用onStart()函数，并在调用onResume()
+之前将DecorView添加到WindowManager中，并且设置Activity为可见，通知ActivityManagerService,
+activity状态发生变化，onResume()之后Activity的布局内容就显示在窗口上了。
+
+常用的图片下载框架也用到了这个设计模式
+
+总结：通过 流程封装，使得固定的执行顺序不能被子类随意修改，而子类只能替换掉某些具体的算法策略，不仅能复用父类
+的代码也能避免功能遭到破坏。对外部客户端来说，隐藏了具体的实现流程，对外暴露一个统一的接口。使得客户端程序的使用
+成本变小，接口更加简洁
+
+
+优点：
+1.封装不变的部分，扩展可变的部分
+2.提取公共部分的代码，便于维护
+
+缺点：
+模版方法会代码阅读的难度
