@@ -1,0 +1,44 @@
+装饰模式：Decorator Pattern，也称为包装模式（Wrapper Pattern）,结构型设计模式之一，它使用一种对
+客户端透明的方式来动态地扩展对象的功能，同时它也是继承关系的一种替代方案
+
+定义：
+动态地给一个对象添加一些额外的职责，就增加功能来讲，装饰模式相比生成子类更加灵活
+
+Component 抽象组件 可以是一个接口或者抽象类，是被装饰的原始对象
+ConcreteComponent 组件具体实现类  是我们装饰的具体对象
+Decorator 抽象装饰者 职责就是为了装饰我们的组件对象，其内部一定要有一个指向组件对象的医用
+            大多数情况下是个抽象类，需要根据不同的逻辑去实现不同的具体子类
+
+ConcreteDecorator 装饰者具体实现类，对抽象装饰者做出具体实现
+
+Android中的模式实现：
+
+Context:抽象组件
+ContextImpl:具体组件实现类 继承Context
+ContextWrapper 装饰者 （有一个Context引用）继承 Context
+
+Activity 继承于ContextThemeWrapper
+实际上ContextWrapper中的所有方法都时调用ContextImpl中对应的方法
+对于具体方法的包装，由ContextWrapper的子类完成，比如Application Service Activity
+
+Android程序的入口：ActivityThread.main()
+
+启动一个Activity需要三个重要的对象：
+Application
+Context
+Configuration
+
+一个应用中由几个Context对象？
+1+nActivity+nService
+
+
+那么怎样辨别使用哪个Context呢？
+当无法确定某个Context对象是否会造成长引用导致内存泄漏时就使用Application的context，因为他的生命周期和
+应用一致
+
+装饰者模式的本质就是 ：间接的封装
+
+装饰者模式和代理模式有些类似：
+常常会把装饰者模式看作代理，装饰模式是以对客户端透明的方式扩展对象的功能，是继承的一种解决方案
+代理是给对象提供一个代理对象，并由代理对象控制对原有对象的引用。
+装饰模式应该为被装饰对象增加功能。代理模式对被代理对象施加控制，没有对它增加功能
