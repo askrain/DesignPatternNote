@@ -1,0 +1,72 @@
+适配器模式：
+就是将两个不兼容的类融合到一起，它有点像粘合剂，将不同的东西通过一种转换使得他们能够写作起来
+
+定义：
+把一个类的接口转换为客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起
+工作
+
+
+使用场景：
+
+1.系统需要使用现有的类，而现有的类接口不符合系统的需要，即接口不兼容
+2.想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些将来
+可能引进的类一起工作
+3.需要一个统一的接口，而输入端的类型不可预知
+
+
+适配器模式分为两种：
+1.类适配器模式  ：通过实现target接口以及继承Adaptee类来实现接口转换
+2.对象适配器模式 ： 不是使用继承关系连接到Adapter类，而是使用代理连接到adaptee类
+
+模型：
+Target  目标角色，也就是所期待得到的接口
+Adaptee 现在需要适配的角色
+Adapter 适配器角色。本模式的核心，适配器把原接口转换为目标接口
+
+例子：
+生活中的笔记本一般都使用5v电压，家用220v,所以需要一个适配器将220v转换为5v
+
+很显然，对象适配器模式更加灵活，所以更加推荐使用这个模式。但具体到项目中要根据时机情况来选择
+
+Android中的适配器模式：
+ListView的父类 AbsListView extends AdapterView<ListAdapter>
+
+
+ListView和RecyclerView的区别：
+
+RecyclerView的优点：
+1.定义了ViewHolder的标准模式
+2.封装了View的缓存判断逻辑、
+3.最为突出的是：通过LayoutManager将RecyclerView显示为不用的样式，即设置不用的布局方式
+4.都是通过Adapter和观察者模式就行数据绑定的
+
+缺点：
+1.没有设置item点击事件，需要用户自己在Adapter中去实现
+2.RecyclerView没有设置Header和Footer,当需要使用的时候可以用viewType来进行分类。例如当position
+为0的时候，viewType设置为0，其他位置itemView的viewType设置为1（在getItemViewType(position)中设置）
+在createViewHolder的时候，根据第二个参数viewType返回不同的ViewHolder。在onBindViewHolder的时候
+先使用instanceOf 判断第一个参数的类别，然后绑定不同的数据
+
+需要注意的是：
+1.getItemCount() 返回的是数据集的数量-1 ，这个1就是HeaderView
+2.从数据集取数据的时候，要把position减1.因为第一个itemView为headerView,通常情况下，headerView
+不适用数据集中的数据，即第一个item不需要数据。需要数据的是第二个itemView,而此时它显示的数据应该是数据集中
+的第一个数据
+
+LayoutManager通过桥接和组合的方式，将布局的职责分离出来实现
+
+相比于常规的Adapter中getView()方法，取而代之的是
+onCreateViewHolder() 加载视图
+onBindViewHolder  绑定数据
+
+RecyclerView中操作的不是View而是ViewHolder
+Android中定义了一个基类Adapter,它的泛型是ViewHolder,用户需要继承ViewHolder去实现自己的ViewHolder
+
+
+应用创建ViewHolder的时候会持有itemView的一个引用，所以一个使用小技巧是：
+通过viewHolder.itemView.getLayoutParam 来设置itemView的布局
+
+优点：
+更好的复用性，更好的扩展性
+缺点：
+过多使用适配器会使系统非常凌乱，不易把握整体
