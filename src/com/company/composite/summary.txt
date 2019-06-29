@@ -1,0 +1,55 @@
+组合模式Composite Pattern：也成为整体模式（Part-whole pattern）
+,结构型模式之一。组合模式比较简单，它将一组相似的对象看作是一对象处理，并根据一个树壮结构来组合对象，然后提供一个
+统一的方法去访问相应的对象，一次忽略掉对象与对象集合之间的差别。生活中一个比较典型的例子就是组织结构的树状图
+
+定义：
+将对象组合成树形结构以表示“部分-整体”的层次结构，使得用户对单个对象和组合对象的使用具有一致性
+
+使用场景：
+1.表示对象的部分-整体层次结构时
+2.从一个人整体中能够独立出部分模块或功能的场景
+
+模型介绍：
+Component  抽象根节点，为组合中的对象生命接口。在适当的情况下，实现所有类共有接口的缺省行为。声明一个接口
+用于访问和管理Component的子节点。可在递归结构中定义一个接口。用于访问一个父节点。并在何时的情况下实现它
+
+Composite  定义有子节点的那些枝干节点的行为，存储子节点。在Component接口中实现与子节点有关的操作
+
+Leaf  在组合中表示叶子节点对象，叶子节点没有子节点。在组合中定义节点对象的行为
+Client 通过Component接口操纵集合节点的对象
+
+操作系统的文件系统就是一个典型的组合模式的例子
+
+
+设计模式在很多情况下，会根据实际应用来调整一些设计模式的结构
+
+
+Android中的实现：
+View和ViewGroup的嵌套组合
+public abstract class ViewGroup extends View implements ViewParents,
+ViewManager
+
+从继承角度讲，viewgroup拥有view类的所有非私有方法，所以View和ViewGroup的差异就在于ViewGroup所
+实现的 ViewParents, ViewManager
+ViewGroup负责对子元素的操作
+
+ViewManager: 定义了对子视图的操作
+1.addView()
+2.updateView()
+3.removeView()
+
+ViewParents:定义了刷新容器的接口和其他一些焦点事件的处理
+1.requestLayout()
+2.boolean isRequestLayout()
+3.invalidateChild()
+4.getParent()
+5.requestChildrenFocus()
+6.bringChildToFront()
+
+View和 ViewGroup的差异：
+ViewGroup是抽象类，ViewGroup将view中的onLayout()重置为抽象方法，也就是所其子类必须实现，而在View中onLayout()
+是一个空实现。View中两个比较重要的方法onMeasure() 和onDraw（）在 ViewGroup中都没有重写。ViewGroup
+中对应的measureChildren、measureChildrenWithMargin和onDispatchDraw()。而dispatchDraw
+来调用每一个子view的onDraw()
+
+
